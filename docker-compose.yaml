@@ -4,16 +4,10 @@ x-common-keys: &common-keys
     - nvr-services
     - traefik-proxy-network
 
-x-environment: &default-tz-puid-pgid
-  TZ: $TZ
-  PUID: $PUID
-  PGID: $PGID
 
 services:
   frigate:
     <<: *common-keys
-    environment:
-      <<: *default-tz-puid-pgid
     image: ghcr.io/blakeblackshear/frigate:0.16.3
     privileged: true # this may not be necessary for all setups
     restart: unless-stopped
@@ -39,6 +33,9 @@ services:
       - "8555:8555/udp" # WebRTC over udp
     environment:
       FRIGATE_RTSP_PASSWORD: "password"
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frigate.rule=Host(`${FRIGATE_NVR_DOMAIN}`)"
