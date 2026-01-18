@@ -38,6 +38,7 @@ services:
       PGID: $PGID
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=traefik-proxy-network"
       - "traefik.http.routers.frigate.rule=Host(`${FRIGATE_NVR_DOMAIN}`)"
       - "traefik.http.routers.frigate.entrypoints=https"
       - "traefik.http.routers.frigate.tls=true"
